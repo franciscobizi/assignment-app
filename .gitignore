@@ -1,0 +1,5 @@
+#Ignore .Net unecessary files
+./.vs
+/**/publish
+/**/bin
+/**/obj
