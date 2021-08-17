@@ -34,41 +34,39 @@ namespace AssignmentDashboard.Server.Models.Users
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("User");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(25);
 
-                entity.Property(e => e.ListAttempt)
+                entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasColumnName("List_attempt");
+                    .HasMaxLength(30);
 
-                entity.Property(e => e.Name).HasMaxLength(30);
-
-                entity.Property(e => e.Surname).HasMaxLength(30);
+                entity.Property(e => e.Surname)
+                    .IsRequired()
+                    .HasMaxLength(30);
             });
 
             modelBuilder.Entity<UserLoginAttempt>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("UserLoginAttempt");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.AttemptTime)
                     .HasColumnType("datetime")
                     .HasColumnName("Attempt_time");
 
-                entity.Property(e => e.ListUserId)
-                    .IsRequired()
-                    .HasColumnName("list_user_id");
+                entity.Property(e => e.IsSuccess).HasColumnName("Is_success");
 
-                entity.HasOne(d => d.ListUserIdNavigation)
-                    .WithMany(p => p.UserLoginAttempts)
-                    .HasForeignKey(d => d.ListUserId)
-                    .HasConstraintName("FK__UserLoginAttempt__list_user_id__5EBF139D");
+                entity.Property(e => e.UserId).HasColumnName("User_id");
+
+                entity.HasOne(e => e.User)
+                      .WithMany(c => c.userLoginAttempts);
             });
 
             OnModelCreatingPartial(modelBuilder);
