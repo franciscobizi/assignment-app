@@ -1,6 +1,5 @@
 #Ignore .Net unecessary files
 .vs
-/**/publish
-/**/bin
-/**/obj
-/**/Migrations
+bin
+obj
+Migrations
